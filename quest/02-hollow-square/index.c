@@ -1,15 +1,15 @@
 #include <stdio.h>
 
 char * usedChar(long length, char line, char col) {
+	int crit = line * col;
 	if (
-		line * col == 0 ||
-		line == length - 1 ||
-		col == length - 1
+		crit == 0 ||
+		crit % (length - 1) == 0
 	) {
-	    return "*";
-    } else {
-    	return " ";
-    };
+		return "*";
+	} else {
+		return " ";
+	};
 };
 
 int main() {
