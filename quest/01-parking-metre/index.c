@@ -28,7 +28,7 @@ int main() {
 	};
 	printf("Customer    Hours    Charge\n"); // Mould your format beforehand
 	double totalHour = 0;
-	for (int c = 0; c < 3; c ++) {
+	for (char c = 0; c < 3; c ++) {
 		double fee = calculateFee(customers[c]);
 		printf("%8i %8.2lf %9.2lf\n", c + 1, customers[c], fee); // Pay attention to string templates used
 		totalHour += customers[c];
