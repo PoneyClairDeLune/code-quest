@@ -15,7 +15,7 @@ char * usedChar(long length, char line, char col) {
 int main() {
 	long length;
 	do {
-		printf("Length of the square's side: ");
+		printf("Length of the square's side (1~20): ");
 		scanf("%ld", &length);
 	} while (length < 1 || length > 20);
 	for (char line = 0; line < length; line ++) {

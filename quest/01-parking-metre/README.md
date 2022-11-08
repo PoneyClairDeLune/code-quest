@@ -21,3 +21,13 @@ Customer   Hours   Charge
 * Calculation of charges must be implemented in a seperate function named `calculateFee`.
 * The function accepts an `f64`(`double`) value as time parked in hours, and returns an `f64`(`double`) value as fee need to be charged.
 * The results must be shown as a correctly-aligned table.
+
+### Target
+In this lesson, you'll be able to learn...
+1. To declare a dedicated funtion, reusing code whenever needed.
+1. Return values in a function using the `return` statement, and the behaviour of returning a value in a function.
+1. `if`, `else if` and `else` statements.
+1. `for` and/or `while` conditional loops.
+1. (C) Basic output formatting with `printf`, and input normalizing with `scanf`.
+1. (C, Go, Rust, ...) Understanding pointers and the use of them.
+1. (C, Go, Rust, ...) Some of the basic types within your language of choice.
