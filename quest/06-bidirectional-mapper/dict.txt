@@ -1,0 +1,7 @@
+go,aller
+learn,apprendre
+pony,poney
+like,aimer
+apple,pomme
+heart,coeur
+horse,cheval
