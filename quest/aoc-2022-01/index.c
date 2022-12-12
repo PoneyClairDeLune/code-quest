@@ -35,8 +35,8 @@ int main() {
 	calIdx = 0;
 	long currentCal = 0;
 	short currentElf = 0;
-	long maxCal = 0;
-	short maxElf = 0;
+	long maxCals[3] = {0};
+	short maxElves[3] = {0};
 	while (continueLoop) {
 		long thisCal = calories[calIdx];
 		if (thisCal == 0) {
@@ -52,9 +52,14 @@ int main() {
 			lastBlank = false;
 			currentCal += thisCal;
 			//printf("Elf #%02i has %i calories\n", currentElf + 1, currentCal);
-			if (currentCal > maxCal) {
-				maxCal = currentCal;
-				maxElf = currentElf;
+			if (currentCal > maxCals[0]) {
+				// Just quickly get things done as the assignment demanded...
+				maxCals[2] = maxCals[1];
+				maxCals[1] = maxCals[0];
+				maxCals[0] = currentCal;
+				maxElves[2] = maxElves[1];
+				maxElves[1] = maxElves[0];
+				maxElves[0] = currentElf;
 				//printf("Record broke!\n");
 			};
 		};
@@ -63,6 +68,6 @@ int main() {
 			continueLoop = false;
 		};
 	};
-	printf("Elf #%02i carries the most calories: %i\n", maxElf + 1, maxCal);
+	printf("Elf #%02i, #%02i and #%02i carries the most calories: %i, %i, %i\n%i calories in total.\n", maxElves[0] + 1, maxElves[1] + 1, maxElves[2] + 1, maxCals[0], maxCals[1], maxCals[2], (maxCals[0] + maxCals[1] + maxCals[2]));
 	return 0;
 };
