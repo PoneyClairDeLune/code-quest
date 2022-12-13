@@ -1,7 +1,10 @@
 #!/bin/bash
 mkdir -p ./build/
+printf "Removing old build result... "
 rm ./build/$1.rustc
+echo "Building program..."
 rustc -o "build/$1.rustc" "quest/$1/index.rs"
+echo "Running!"
 cd "quest/$1"
 ../../build/$1.rustc
 exit
