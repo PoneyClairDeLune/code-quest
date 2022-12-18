@@ -122,10 +122,9 @@ fn main() {
     let mut topward: Vec<u32> = vec![];
     let mut rightward: Vec<u32> = vec![];
     let mut bottomward: Vec<u32> = vec![];
-    let mut x_cache: u32 = 0;
     let mut y_cache: Vec<u32> = vec![];
-    let mut x_highest: u8 = 0;
-    let mut y_highest: Vec<u8> = vec![];
+    let mut x_nearest: [u32; 10] = [0; 10];
+    let mut y_nearest: Vec<[u32; 10]> = vec![];
     // Third raycasting with cached results, from left and top
     print("Third raycasting started.\n");
     while i0 < tree_house.len() {
@@ -134,36 +133,52 @@ fn main() {
         let e0 = u32::from(tree_house[i0]);
         let mut x_store: u32 = 0;
         let mut y_store: u32 = 0;
+        if y_nearest.len() <= x {
+            y_nearest.push([0; 10]);
+        };
         if x == 0 {
-            x_cache = 0;
-            x_highest = tree_house[i0];
+            let mut i1: usize = 0;
+            while i1 < x_nearest.len() {
+                x_nearest[i1] = 0;
+                i1 += 1;
+            }
+            x_nearest[usize::from(tree_house[i0] - 48)] = x as u32;
         } else {
             if e0 > u32::from(tree_house[i0 - 1]) {
-                x_cache += 1;
-                if e0 > u32::from(x_highest) {
-                    x_cache = x as u32;
-                };
-                x_highest = tree_house[i0];
+                let mut start_height: usize = (e0 as usize) - 48;
+                let mut nearest_block: u32 = 0;
+                while start_height < 10 {
+                    if nearest_block < x_nearest[start_height] {
+                        nearest_block = x_nearest[start_height];
+                    };
+                    start_height += 1;
+                }
+                x_store = (x as u32) - nearest_block;
             } else {
-                x_cache = 1;
+                x_store = 1;
             };
-            x_store = x_cache;
         };
+        x_nearest[usize::from(tree_house[i0] - 48)] = x as u32;
         if y == 0 {
             y_cache.push(0);
-            y_highest.push(tree_house[i0]);
+            y_nearest[x][usize::from(tree_house[i0] - 48)] = y as u32;
         } else {
             if e0 > u32::from(tree_house[i0 - lc]) {
-                y_cache[x] += 1;
-                if e0 > u32::from(y_highest[x]) {
-                    y_cache[x] = y as u32;
-                };
-                y_highest[x] = tree_house[i0];
+                let mut start_height: usize = (e0 as usize) - 48;
+                let mut nearest_block: u32 = 0;
+                while start_height < 10 {
+                    if nearest_block < y_nearest[x][start_height] {
+                        nearest_block = y_nearest[x][start_height];
+                    };
+                    start_height += 1;
+                }
+                y_cache[x] = (y as u32) - nearest_block;
             } else {
                 y_cache[x] = 1;
             };
             y_store = y_cache[x];
         };
+        y_nearest[x][usize::from(tree_house[i0] - 48)] = y as u32;
         leftward.push(if x_store > 0 { x_store } else { 1 });
         topward.push(if y_store > 0 { y_store } else { 1 });
         i0 += 1;
@@ -178,41 +193,60 @@ fn main() {
         let mut x_store: u32 = 0;
         let mut y_store: u32 = 0;
         if x == 0 {
-            x_cache = 0;
-            x_highest = tree_house[i0];
+            let mut i1: usize = 0;
+            while i1 < x_nearest.len() {
+                x_nearest[i1] = 0;
+                i1 += 1;
+            }
+            x_nearest[usize::from(tree_house[i0] - 48)] = x as u32;
         } else {
             if e0 > u32::from(tree_house[i0 + 1]) {
-                x_cache += 1;
-                if e0 > u32::from(x_highest) {
-                    x_cache = x as u32;
-                };
-                x_highest = tree_house[i0];
+                let mut start_height: usize = (e0 as usize) - 48;
+                let mut nearest_block: u32 = 0;
+                while start_height < 10 {
+                    if nearest_block < x_nearest[start_height] {
+                        nearest_block = x_nearest[start_height];
+                    };
+                    start_height += 1;
+                }
+                x_store = (x as u32) - nearest_block;
             } else {
-                x_cache = 1;
+                x_store = 1;
             };
-            x_store = x_cache;
         };
+        x_nearest[usize::from(tree_house[i0] - 48)] = x as u32;
         if y == 0 {
             y_cache[x] = 0;
-            y_highest[x] = tree_house[i0];
+            let mut i1: usize = 0;
+            while i1 < 10 {
+                y_nearest[x][i1] = 0;
+                i1 += 1;
+            }
+            y_nearest[x][usize::from(tree_house[i0] - 48)] = y as u32;
         } else {
             if e0 > u32::from(tree_house[i0 + lc]) {
-                y_cache[x] += 1;
-                if e0 > u32::from(y_highest[x]) {
-                    y_cache[x] = y as u32;
-                };
-                y_highest[x] = tree_house[i0];
+                let mut start_height: usize = (e0 as usize) - 48;
+                let mut nearest_block: u32 = 0;
+                while start_height < 10 {
+                    if nearest_block < y_nearest[x][start_height] {
+                        nearest_block = y_nearest[x][start_height];
+                    };
+                    start_height += 1;
+                }
+                y_cache[x] = (y as u32) - nearest_block;
             } else {
                 y_cache[x] = 1;
             };
             y_store = y_cache[x];
         };
+        y_nearest[x][usize::from(tree_house[i0] - 48)] = y as u32;
         rightward.push(if x_store > 0 { x_store } else { 1 });
         bottomward.push(if y_store > 0 { y_store } else { 1 });
     }
     // Debugging window
-    let mut i4: usize = 0;
-    /* while i4 < tree_house.len() {
+    /* let mut i4: usize = 0;
+    println!("Casting from left:");
+    while i4 < tree_house.len() {
         print!("{0:0>2}", leftward[i4]);
         if (i4 + 1) % usize::from(tree_count) == 0 {
             print("\n");
@@ -222,6 +256,7 @@ fn main() {
         i4 += 1;
     }
     i4 = 0;
+    println!("Casting from top:");
     while i4 < tree_house.len() {
         print!("{0:0>2}", topward[i4]);
         if (i4 + 1) % usize::from(tree_count) == 0 {
@@ -232,6 +267,7 @@ fn main() {
         i4 += 1;
     }
     i4 = 0;
+    println!("Casting from right:");
     while i4 < tree_house.len() {
         print!("{0:0>2}", rightward[tree_house.len() - i4 - 1]);
         if (i4 + 1) % usize::from(tree_count) == 0 {
@@ -241,7 +277,8 @@ fn main() {
         };
         i4 += 1;
     }
-    i4 = 0; */
+    i4 = 0;
+    println!("Casting from bottom:");
     while i4 < tree_house.len() {
         print!("{0:0>2}", bottomward[tree_house.len() - i4 - 1]);
         if (i4 + 1) % usize::from(tree_count) == 0 {
@@ -250,18 +287,19 @@ fn main() {
             print(" ");
         };
         i4 += 1;
-    }
+    } */
     // Scenic score calculation
     let mut highest_score: u32 = 0;
+    //println!("Final result:");
     while i0 < tree_house.len() {
         let r_index = tree_house.len() - i0 - 1;
         let score = leftward[i0] * topward[i0] * rightward[r_index] * bottomward[r_index];
-        print!("{0:0>2}", score);
+        /* print!("{0:0>2}", score);
         if (i0 + 1) % usize::from(tree_count) == 0 {
             print("\n");
         } else {
             print(" ");
-        };
+        }; */
         if score > highest_score {
             highest_score = score;
         };
