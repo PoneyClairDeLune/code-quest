@@ -1,29 +1,27 @@
 .global _start
-.intel_syntax
-.section .text
+.intel_syntax noprefix
 
 _start:
 	
 	# Print
 	# "write"
-	mov %eax, 1
+	mov rax, 1
 	# to stdout
-	mov %ebx, 1
+	mov rdi, 1
 	# Load address of the message into memory
-	lea %ecx, [message]
+	lea rsi, [message]
 	# Length of message: 9 characters
-	mov %edx, 9
-	# Interrupt
-	int 0x80
+	mov rdx, 9
+	# Syscall
+	syscall
 	
 	# Exit
 	# "exit"
-	mov %eax, 60
-	# returns 0
-	mov %ebx, 0
-	# Interrupt
-	int 0x80
+	mov rax, 60
+	# Returns 0
+	mov rdi, 0
+	# Syscall
+	syscall
 
-.section .data
-	message:
-	.ascii "Hi Luna!\n"
+message:
+	.asciz "Hi Luna!\n"
