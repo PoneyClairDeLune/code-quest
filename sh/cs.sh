@@ -1,4 +1,5 @@
 #!/bin/bash
+export LANG=
 mkdir -p ./build/
 echo "Removing old build result..."
 rm -r "./build/$1.dncs"
