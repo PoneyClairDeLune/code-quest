@@ -27,6 +27,7 @@ namespace ParkingMetre {
 		static void Main(string[] args) {
 			double[] elapsed = new double[3];
 			for (int i = 0; i < elapsed.Length; i ++) {
+				elapsed[i] = 0;
 				Console.Write("How many hours did customer #{0} stay? ", i + 1);
 				elapsed[i] = double.Parse(Console.ReadLine());
 			};
