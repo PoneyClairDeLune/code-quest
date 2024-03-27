@@ -1,10 +1,14 @@
 #!/bin/bash
 mkdir -p ./build/
-printf "Removing old build result... "
-rm ./build/$1.dncs
+echo "Removing old build result..."
+rm -r "./build/$1.dncs"
+echo "Generating temporary project..."
+cp -r "./quest/$1/" "./build/$1.dncs/"
+cp "./common/index.csproj" "./build/$1.dncs/"
 echo "Building program..."
-#RUST_BACKTRACE=1 rustc -o "build/$1.rustc" "quest/$1/index.rs"
+cd "./build/$1.dncs/"
+dotnet build
 echo "Running!"
-cd "quest/$1"
+"./bin/Debug/net8.0/index"
 #../../build/$1.dncs
 exit
