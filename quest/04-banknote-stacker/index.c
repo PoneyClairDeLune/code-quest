@@ -23,7 +23,7 @@ int main() {
 	char employeeCount = 5;
 	int salary[employeeCount];
 	// Record the salary of each employee
-	for (char i = 0; i < 5; i ++) {
+	for (char i = 0; i < employeeCount; i ++) {
 		printf("Salary of employee #%i: ", i + 1);
 		scanf("%d", &salary[i]);
 	};
