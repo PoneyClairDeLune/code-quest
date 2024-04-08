@@ -7,7 +7,7 @@ namespace Square {
 			byte n = byte.Parse(kn[0]);
 			byte k = byte.Parse(kn[1]);
 			string[] scores = Console.ReadLine().Split(' ');
-			byte criteria = byte.Parse(scores[k]);
+			byte criteria = byte.Parse(scores[k - 1]);
 			byte advanceCount = 0;
 			foreach (string scoreText in scores) {
 				byte score = byte.Parse(scoreText);
