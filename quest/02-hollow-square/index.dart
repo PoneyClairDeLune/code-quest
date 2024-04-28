@@ -2,10 +2,12 @@ import "dart:io";
 import "dart:convert";
 
 String usedChar (int size, int line, int col) {
-	int criteria = line * col;
+	int criteria = size - 1;
 	if (
-		criteria == 0 ||
-		criteria % (size - 1) == 0
+		line == 0 ||
+		col == 0 ||
+		line == criteria ||
+		col == criteria
 	) {
 		return "*";
 	} else {

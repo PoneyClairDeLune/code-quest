@@ -1,10 +1,12 @@
 #include <stdio.h>
 
 char * usedChar(long length, char line, char col) {
-	int crit = line * col;
+	int crit = length - 1;
 	if (
-		crit == 0 ||
-		crit % (length - 1) == 0
+		line == 0 ||
+		col == 0 ||
+		line == crit ||
+		col == crit
 	) {
 		return "*";
 	} else {

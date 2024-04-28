@@ -17,8 +17,8 @@ fn scanln(source: &Stdin) -> String {
 const USE_CHARS: [&str; 2] = ["*", " "];
 
 fn used_char(size: u16, line: u16, col: u16) -> String {
-	let crit: u16 = line * col;
-	if crit == 0 || crit % (size - 1) == 0 {
+	let crit: u16 = size - 1;
+	if line == 0 || col == 0 || line == crit || col == crit {
 		return String::from(USE_CHARS[0]);
 	} else {
 		return String::from(USE_CHARS[1]);

@@ -5,9 +5,9 @@ import (
 	"strconv"
 )
 
-func getChar(length int64, line int64, col int64) string {
-	var crit int64 = line * col
-	if crit == 0 || crit % (length - 1) == 0 {
+func getChar(length int16, line int16, col int16) string {
+	var crit int16 = length - 1
+	if line == 0 || line == crit || col == 0 || col == crit {
 		return "*"
 	} else {
 		return " "
@@ -15,7 +15,7 @@ func getChar(length int64, line int64, col int64) string {
 }
 
 func main() {
-	var length int64 = 0
+	var length int16 = 0
 	var err error;
 	for ok := true; ok; ok = (length < 1 || length > 20 || err != nil) {
 		fmt.Printf("Length of the square's side (1~20): ")
@@ -25,8 +25,8 @@ func main() {
 		length, err = strconv.ParseInt(line, 10, 64)
 		//fmt.Printf("Input value: %d\n", length)
 	}
-	for line := int64(0); line < length; line ++ {
-		for col := int64(0); col < length; col ++ {
+	for line := int16(0); line < length; line ++ {
+		for col := int16(0); col < length; col ++ {
 			fmt.Printf(getChar(length, line, col))
 		}
 		fmt.Printf("\n")
