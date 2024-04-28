@@ -15,16 +15,19 @@ func getChar(length int16, line int16, col int16) string {
 }
 
 func main() {
-	var length int16 = 0
+	var rLength int64 = 0
 	var err error;
-	for ok := true; ok; ok = (length < 1 || length > 20 || err != nil) {
+	for {
 		fmt.Printf("Length of the square's side (1~20): ")
 		var line string
 		// Why does Go automatically read line in a space-delimited fashion?
 		fmt.Scanln(&line)
-		length, err = strconv.ParseInt(line, 10, 64)
-		//fmt.Printf("Input value: %d\n", length)
+		rLength, err = strconv.ParseInt(line, 10, 16)
+		if rLength > 0 || rLength < 21 || err == nil {
+			break
+		}
 	}
+	length := int16(rLength)
 	for line := int16(0); line < length; line ++ {
 		for col := int16(0); col < length; col ++ {
 			fmt.Printf(getChar(length, line, col))
