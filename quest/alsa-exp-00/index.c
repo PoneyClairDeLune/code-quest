@@ -1,4 +1,4 @@
-#include <alsa/asoundlib.h>
+#include "alsa/asoundlib.h"
 
 static snd_seq_t *sequencerHandle;
 static int midiInPort;
@@ -10,4 +10,18 @@ void midiOpen(void) {
 		SND_SEQ_PORT_CAP_WRITE | SND_SEQ_PORT_CAP_SUBS_WRITE,
 		SND_SEQ_PORT_TYPE_APPLICATION
 	);
+}
+
+snd_seq_event_t *midiRead(void) {
+	snd_seq_event_t *ev = NULL;
+	snd_seq_event_input(sequencerHandle, &ev);
+	return ev;
+}
+
+int main() {
+	midiOpen();
+	while (1) {
+		midiRead();
+	};
+	return 0;
 }
