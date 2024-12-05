@@ -11,7 +11,7 @@ let parseLine = async (targetArray, readable) => {
 		targetArray[0].push(elements[0]);
 		targetArray[1].push(elements[1]);
 	};
-}
+};
 let targetArray = [[], []];
 let sorter = (a, b) => {
 	return a - b;
