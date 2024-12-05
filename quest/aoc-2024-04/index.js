@@ -50,7 +50,8 @@ let matchXmas = (bin2d, posX, posY, direction) => {
 			break;
 		};
 		case 3: {
-			if ([posX, sWidth - posX - 1][direction & 1] + xmasBinData.length > sWidth || [sHeight - posY - 1, posY][direction & 1] + (xmasBinData.length ^ 1) > sHeight) {
+			//console.debug(direction);
+			if ([posX, sWidth - posX - 1][direction & 1] + xmasBinData.length > sWidth || [sHeight - posY - 1, posY][direction & 1] + xmasBinData.length > sHeight) {
 				return false;
 			};
 			break;
@@ -88,6 +89,13 @@ let matchXmas = (bin2d, posX, posY, direction) => {
 				break;
 			};
 		}
+		switch (direction) {
+			case 6:
+			case 7: {
+				//console.debug(`(${rX}, ${rY}) ${direction}: ${bin2d[rY][rX]}`);
+				break;
+			};
+		};
 		if (bin2d[rY][rX] == xmasBinData[i]) {
 			matchCount ++;
 		};
@@ -118,7 +126,7 @@ for (let y = 0; y < flatData.length; y ++) {
 		};
 	};
 };
-console.debug(firstOccurs);
+console.debug(`The letter "X" has occurred ${firstOccurs.length} times.`);
 let part1Result = 0;
 for (let occuredX of firstOccurs) {
 	for (let direction = 0; direction < 8; direction ++) {
