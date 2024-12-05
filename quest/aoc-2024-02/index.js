@@ -25,17 +25,17 @@ await parseLine(routes, (await Deno.open("./dataInput.txt")).readable);
 // Part 2: Is it safe when up to 1 node gets removed?
 let getUnsafeCount = (route) => {
 	let targetDirection = route[1] - route[0];
-	let unsafeIndexes = [];
+	let unsafeIndexes = new Set();
 	for (let i = 1; i < route.length; i ++) {
 		let difference = route[i] - route[i - 1];
 		if (difference == 0) {
-			unsafeIndexes.push(i - 1);
+			unsafeIndexes.add(i - 1);
 			debugMode > 3 && console.debug(`Route deemed unsafe: Flat en route.`);
 		} else if (Math.abs(difference) > 3) {
-			unsafeIndexes.push(i - 1);
+			unsafeIndexes.add(i - 1);
 			debugMode > 3 && console.debug(`Route deemed unsafe: Steep en route.`);
 		} else if (difference * targetDirection < 0) {
-			unsafeIndexes.push(i - 1);
+			unsafeIndexes.add(i - 1);
 			debugMode > 3 && console.debug(`Route deemed unsafe: Altered direction en route.`);
 		};
 		targetDirection = difference;
@@ -47,7 +47,7 @@ let safeCount = 0;
 let safeDampenedCount = 0;
 for (let route of routes) {
 	let unsafeIndexes = getUnsafeCount(route);
-	switch (unsafeIndexes.length) {
+	switch (unsafeIndexes.size) {
 		case 0: {
 			safeCount ++;
 			safeDampenedCount ++;
@@ -56,32 +56,28 @@ for (let route of routes) {
 		};
 		default: {
 			let solved = false, triedIndexes = new Set();
-			for (let i = 0; i < unsafeIndexes.length; i ++) {
+			route.forEach((e, i) => {
+				unsafeIndexes.add(i);
+			});
+			unsafeIndexes.forEach((operatedIndex) => {
 				if (solved) {
-					continue;
+					return;
 				};
-				let realUnsafeIndex = unsafeIndexes[i];
-				for (let i0 = 0; i0 < 2; i0 ++) {
-					let operatedIndex = realUnsafeIndex + i0;
-					if (solved) {
-						continue;
-					};
-					if (triedIndexes.has(operatedIndex)) {
-						continue;
-					};
-					triedIndexes.add(operatedIndex);
-					let copiedRoute = route.slice();
-					copiedRoute.splice(operatedIndex, 1);
-					debugMode > 2 && console.debug(`Submitted route for testing again on index ${operatedIndex}.`);
-					let unsafeDampenedIndexes = getUnsafeCount(copiedRoute);
-					if (!unsafeDampenedIndexes.length) {
-						solved = true;
-						safeDampenedCount ++;
-						debugMode > 2 && console.debug(`Route proven to be safe on attempt #${triedIndexes.size} (array index #${operatedIndex})`);
-						//debugMode > 0 && console.debug(`Desinated almost-safe route (${unsafeIndexes.length}): ${route.join(", ")}`);
-					};
+				if (triedIndexes.has(operatedIndex)) {
+					return;
 				};
-			};
+				triedIndexes.add(operatedIndex);
+				let copiedRoute = route.slice();
+				copiedRoute.splice(operatedIndex, 1);
+				debugMode > 2 && console.debug(`Submitted route for testing again on index ${operatedIndex}.`);
+				let unsafeDampenedIndexes = getUnsafeCount(copiedRoute);
+				if (!unsafeDampenedIndexes.size) {
+					solved = true;
+					safeDampenedCount ++;
+					debugMode > 2 && console.debug(`Route proven to be safe on attempt #${triedIndexes.size} (array index #${operatedIndex})`);
+					//debugMode > 0 && console.debug(`Desinated almost-safe route (${unsafeIndexes.length}): ${route.join(", ")}`);
+				};
+			});
 			if (!solved) {
 				debugMode > 0 && console.debug(`Desinated irrepairable route (${unsafeIndexes.length}): ${route.join(", ")}`);
 			};
