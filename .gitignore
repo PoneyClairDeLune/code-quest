@@ -4,3 +4,4 @@ build/*
 common/bin
 common/obj
 dataInput.txt
+logs.txt
