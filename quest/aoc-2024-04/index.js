@@ -203,9 +203,9 @@ for (let occuredA of firstOccursB) {
 		let matchResult = matchXmasMas(flatData, ...occuredA, direction);
 		//console.debug(`(${occuredA.join(", ")}) ${direction}: ${matchResult}`);
 		if (matchResult) {
-			part1Result ++;
+			part2Result ++;
 			//console.debug(`(${occuredA.join(", ")}) ${direction}: ${matchResult}`);
 		};
 	};
 };
-console.debug(`Part #2: ${part1Result}`);
+console.debug(`Part #2: ${part2Result}`);
