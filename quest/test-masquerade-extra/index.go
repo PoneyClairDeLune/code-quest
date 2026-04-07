@@ -14,8 +14,8 @@ func GetCurlVersion() string {
 	var timeCurrent int64 = time.Now().Unix() / 86400
 	var timeStart int64 = time.Date(2023, 3, 20, 0, 0, 0, 0, time.UTC).Unix() / 86400
 	// Generate some variations upon the average release cadance of 56.67 days.
-	var minorValue int = int((timeCurrent - timeStart) / 57)
-	minorValue += int(math.Floor(math.Sqrt(rand.Float64() * 16))) - 4
+	var timeDiff int = int((timeCurrent - timeStart - 60)) - int(math.Floor(math.Pow(rand.Float64(), 2) * 165))
+	var minorValue int = int(timeDiff / 57)
 	return "8." + strconv.Itoa(minorValue) + ".0"
 }
 func GetFirefoxVersion() string {
@@ -23,9 +23,8 @@ func GetFirefoxVersion() string {
 	var timeCurrent int64 = time.Now().Unix() / 86400
 	var timeStart int64 = time.Date(2024, 7, 29, 0, 0, 0, 0, time.UTC).Unix() / 86400
 	// Generate some variations upon the average release cadance of 28 days, however Firefox had some delays averaging to 29.67 days in total.
-	var timeDiff = timeCurrent - timeStart
+	var timeDiff = timeCurrent - timeStart - 15 - int64(math.Floor(math.Pow(rand.Float64(), 2) * 45))
 	var majorValue int = int(timeDiff / 29) + 128
-	majorValue += int(math.Floor(math.Sqrt(rand.Float64() * 4))) - 2
 	return strconv.Itoa(majorValue) + ".0"
 }
 func GetSafariVersion() string {
@@ -39,7 +38,7 @@ func GetSafariVersion() string {
 		releaseYear --
 		splitPoint = time.Date(releaseYear, 9, 23, 0, 0, 0, 0, time.UTC)
 	}
-	splitPoint = splitPoint.AddDate(0, 0, int(math.Floor(math.Pow(rand.Float64(), 2) * 75)))
+	splitPoint = splitPoint.AddDate(0, 0, int(math.Floor(math.Pow(rand.Float64(), 3) * 75)))
 	var minorVersion = minorMap[(anchoredTime.Unix() - splitPoint.Unix()) / 1296000]
 	return strconv.Itoa(releaseYear - 1999) + "." + strconv.Itoa(minorVersion)
 }
