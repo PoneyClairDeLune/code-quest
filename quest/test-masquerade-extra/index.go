@@ -9,6 +9,14 @@ import (
 	"time"
 )
 
+func GetChromeVersion() string {
+	// Start from Chrome 144 released on 2026.1.13
+	var startVersion int = 144
+	var timeStart int64 = time.Date(2026, 1, 13, 0, 0, 0, 0, time.UTC).Unix() / 86400
+	var timeCurrent int64 = time.Now().Unix() / 86400
+	var timeDiff int = int((timeCurrent - timeStart - 30)) - int(math.Floor(math.Pow(rand.Float64(), 2) * 90))
+	return strconv.Itoa(startVersion + (timeDiff / 30)) + ".0"
+}
 func GetCurlVersion() string {
 	// curl 8.0.0 was released on 20/03/2023.
 	var timeCurrent int64 = time.Now().Unix() / 86400
@@ -46,6 +54,7 @@ func GetSafariVersion() string {
 func main() {
 	fmt.Println("Approximated versions:")
 	fmt.Printf("curl - %s\n", GetCurlVersion())
+	fmt.Printf("Chrome - %s\n", GetChromeVersion())
 	fmt.Printf("Firefox - %s\n", GetFirefoxVersion())
 	fmt.Printf("Safari - %s\n", GetSafariVersion())
 }
